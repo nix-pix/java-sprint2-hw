@@ -5,9 +5,11 @@ import java.util.HashMap;
 
 public class YearReport {
     HashMap<Integer, Stat> yearDataByMonth = new HashMap<>();
+    HashMap<Integer, Integer> profitByMonth = new HashMap<>();
+    HashMap<Integer, Integer> expenseByMonth = new HashMap<>();
     boolean flag = false;
 
-    void readReport() {
+    void readReport() { // считывание и привидение отчета
         String reportPath = "./resources/y.2021.csv";
         String report = readFileContentsOrNull(reportPath);
         String[] lines = report.split("\r?\n"); // разбитие на строки
@@ -28,10 +30,30 @@ public class YearReport {
             }
         }
         System.out.println(report);
+        findProfitByMonth();
+        findExpenseByMonth();
         flag = true;
     }
 
-    String readFileContentsOrNull(String path) {
+    void findProfitByMonth() { // заполнение таблицы доходов по месяцам
+        Stat stat1 = yearDataByMonth.get(01);
+        profitByMonth.put(1, stat1.profits);
+        Stat stat2 = yearDataByMonth.get(02);
+        profitByMonth.put(2, stat2.profits);
+        Stat stat3 = yearDataByMonth.get(03);
+        profitByMonth.put(3, stat3.profits);
+    }
+
+    void findExpenseByMonth() { // заполнение таблицы расходов по месяцам
+        Stat stat1 = yearDataByMonth.get(01);
+        expenseByMonth.put(1, stat1.expenses);
+        Stat stat2 = yearDataByMonth.get(02);
+        expenseByMonth.put(2, stat2.expenses);
+        Stat stat3 = yearDataByMonth.get(03);
+        expenseByMonth.put(3, stat3.expenses);
+    }
+
+    String readFileContentsOrNull(String path) { // утилита для считывания .csv
         try {
             return Files.readString(Path.of(path));
         } catch (IOException e) {
@@ -44,7 +66,7 @@ public class YearReport {
         System.out.println("Информация из отчета за 2021 год");
     }
 
-    void printProfitByMonth() {
+    void printProfitByMonth() { // прибыль по месяцам
         Stat stat1 = yearDataByMonth.get(01);
         System.out.println("Прибыль за январь составила - " + stat1.profits);
         Stat stat2 = yearDataByMonth.get(02);
@@ -53,7 +75,7 @@ public class YearReport {
         System.out.println("Прибыль за март составила - " + stat3.profits);
     }
 
-    void printAverageExpenseByMonths() {
+    void printAverageExpenseByMonths() { // средний расход за все месяцы
         Stat stat1 = yearDataByMonth.get(01);
         Stat stat2 = yearDataByMonth.get(02);
         Stat stat3 = yearDataByMonth.get(03);
@@ -61,7 +83,7 @@ public class YearReport {
         System.out.println("Средний расход за все месяцы составил - " + average);
     }
 
-    void printAverageProfitByMonths() {
+    void printAverageProfitByMonths() { // средний доход за все месяцы
         Stat stat1 = yearDataByMonth.get(01);
         Stat stat2 = yearDataByMonth.get(02);
         Stat stat3 = yearDataByMonth.get(03);

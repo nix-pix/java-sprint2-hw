@@ -21,6 +21,8 @@ public class Main {
                     break;
                 case 3:
                     if (monthReport.flag && yearReport.flag) {
+                        ReportAudit.auditProfit(monthReport, yearReport);
+                        ReportAudit.auditExpense(monthReport, yearReport);
                     } else {
                         System.out.println("Вы не занесли отчеты в память программы. Сначала считайте все отчеты...");
                     }
@@ -63,7 +65,7 @@ public class Main {
         System.out.println("Что вы хотите сделать?");
         System.out.println("1 - Считать все месячные отчёты");
         System.out.println("2 - Считать годовой отчёт");
-        System.out.println("3 - Сверить отчёты"); // не работает
+        System.out.println("3 - Сверить отчёты");
         System.out.println("4 - Вывести информацию о всех месячных отчётах");
         System.out.println("5 - Вывести информацию о годовом отчёте");
         System.out.println("0 - Выйти из приложения");

@@ -5,9 +5,11 @@ import java.util.HashMap;
 
 public class MonthReport {
     HashMap<Integer, HashMap<Integer, Stat>> monthDataByMonth = new HashMap<>();
+    HashMap<Integer, Integer> profitByMonth = new HashMap<>();
+    HashMap<Integer, Integer> expenseByMonth = new HashMap<>();
     boolean flag = false;
 
-    void readReports() {
+    void readReports() { // считывание и привидение отчетов
         for (int i = 1; i < 4; i++) {
             String reportPath = "./resources/m.20210" + i + ".csv";
             String report = readFileContentsOrNull(reportPath);
@@ -34,10 +36,40 @@ public class MonthReport {
             }
             System.out.println(report);
         }
+        findProfitByMonth();
+        findExpenseByMonth();
         flag = true;
     }
 
-    String readFileContentsOrNull(String path) {
+    void findProfitByMonth() { // заполнение таблицы доходов по месяцам
+        for (int i = 1; i < 4; i++) {
+            HashMap<Integer, Stat> monthData = monthDataByMonth.get(i);
+            int sum = 0;
+            for (int j = 0; j < 10; j++) {
+                if (monthData.containsKey(j)) {
+                    Stat stat = monthData.get(j);
+                    sum += stat.profits;
+                }
+            }
+            profitByMonth.put(i, sum);
+        }
+    }
+
+    void findExpenseByMonth() { // заполнение таблицы расходов по месяцам
+        for (int i = 1; i < 4; i++) {
+            HashMap<Integer, Stat> monthData = monthDataByMonth.get(i);
+            int sum = 0;
+            for (int j = 0; j < 10; j++) {
+                if (monthData.containsKey(j)) {
+                    Stat stat = monthData.get(j);
+                    sum += stat.expenses;
+                }
+            }
+            expenseByMonth.put(i, sum);
+        }
+    }
+
+    String readFileContentsOrNull(String path) { // утилита для считывания .csv
         try {
             return Files.readString(Path.of(path));
         } catch (IOException e) {
@@ -46,11 +78,11 @@ public class MonthReport {
         }
     }
 
-    void printInfo(String month) {
+    void printInfo(String month) { // название месяца
         System.out.println("Информация из отчета за " + month);
     }
 
-    void printMaxProfitByMonth(int month) {
+    void printMaxProfitByMonth(int month) { // самый прибыльный товар месяца
         HashMap<Integer, Stat> monthData = monthDataByMonth.get(month);
         int maxProfit = 0;
         String name = null;
@@ -66,7 +98,7 @@ public class MonthReport {
         System.out.println("Самая прибыльная позиция этого месяца: " + name + ". Прибыль составила - " + maxProfit);
     }
 
-    void printMaxExpenseByMonth(int month) {
+    void printMaxExpenseByMonth(int month) { // самый большая трата месяца
         HashMap<Integer, Stat> monthData = monthDataByMonth.get(month);
         int maxExpense = 0;
         String name = null;
