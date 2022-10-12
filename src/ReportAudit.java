@@ -2,7 +2,8 @@ public class ReportAudit {
 
     static void auditProfit(MonthReport monthReport, YearReport yearReport) { // сверка доходов
         boolean flag = true;
-        for (int i = 1; i < 4; i++) {
+        int monthsNumber = 3;
+        for (int i = 1; i <= monthsNumber; i++) {
             int yearSum = yearReport.profitByMonth.get(i);
             int monthSum = monthReport.profitByMonth.get(i);
             String month = null;
@@ -25,7 +26,8 @@ public class ReportAudit {
 
     static void auditExpense(MonthReport monthReport, YearReport yearReport) { // сверка расходов
         boolean flag = true;
-        for (int i = 1; i < 4; i++) {
+        int monthsNumber = 3;
+        for (int i = 1; i <= monthsNumber; i++) {
             int yearSum = yearReport.expenseByMonth.get(i);
             int monthSum = monthReport.expenseByMonth.get(i);
             String month = null;

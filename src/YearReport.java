@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -10,7 +11,7 @@ public class YearReport {
     boolean flag = false;
 
     void readReport() { // считывание и привидение отчета
-        String reportPath = "./resources/y.2021.csv";
+        String reportPath = "." + File.separator + "resources" + File.separator + "y.2021.csv";
         String report = readFileContentsOrNull(reportPath);
         String[] lines = report.split("\r?\n"); // разбитие на строки
         for (int i = 1; i < lines.length; i++) {

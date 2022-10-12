@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -10,8 +11,9 @@ public class MonthReport {
     boolean flag = false;
 
     void readReports() { // считывание и привидение отчетов
-        for (int i = 1; i < 4; i++) {
-            String reportPath = "./resources/m.20210" + i + ".csv";
+        int reportsNumber = 3;
+        for (int i = 1; i <= reportsNumber; i++) {
+            String reportPath = "." + File.separator + "resources" + File.separator + "m.20210" + i + ".csv";
             String report = readFileContentsOrNull(reportPath);
             String[] lines = report.split("\r?\n"); // разбитие на строки
             HashMap<Integer, Stat> monthData = new HashMap<>();
@@ -42,10 +44,12 @@ public class MonthReport {
     }
 
     void findProfitByMonth() { // заполнение таблицы доходов по месяцам
-        for (int i = 1; i < 4; i++) {
+        int monthsNumber = 3;
+        for (int i = 1; i <= monthsNumber; i++) {
             HashMap<Integer, Stat> monthData = monthDataByMonth.get(i);
             int sum = 0;
-            for (int j = 0; j < 10; j++) {
+            int linesNumber = 8;
+            for (int j = 1; j <= linesNumber; j++) {
                 if (monthData.containsKey(j)) {
                     Stat stat = monthData.get(j);
                     sum += stat.profits;
@@ -56,10 +60,12 @@ public class MonthReport {
     }
 
     void findExpenseByMonth() { // заполнение таблицы расходов по месяцам
-        for (int i = 1; i < 4; i++) {
+        int monthsNumber = 3;
+        for (int i = 1; i <= monthsNumber; i++) {
             HashMap<Integer, Stat> monthData = monthDataByMonth.get(i);
             int sum = 0;
-            for (int j = 0; j < 10; j++) {
+            int linesNumber = 8;
+            for (int j = 1; j <= linesNumber; j++) {
                 if (monthData.containsKey(j)) {
                     Stat stat = monthData.get(j);
                     sum += stat.expenses;
@@ -86,7 +92,8 @@ public class MonthReport {
         HashMap<Integer, Stat> monthData = monthDataByMonth.get(month);
         int maxProfit = 0;
         String name = null;
-        for (int i = 1; i < 10; i++) {
+        int linesNumber = 8;
+        for (int i = 1; i <= linesNumber; i++) {
             if (monthData.containsKey(i)) {
                 Stat stat = monthData.get(i);
                 if (stat.profits > maxProfit) {
@@ -102,7 +109,8 @@ public class MonthReport {
         HashMap<Integer, Stat> monthData = monthDataByMonth.get(month);
         int maxExpense = 0;
         String name = null;
-        for (int i = 1; i < 10; i++) {
+        int linesNumber = 8;
+        for (int i = 1; i <= linesNumber; i++) {
             if (monthData.containsKey(i)) {
                 Stat stat = monthData.get(i);
                 if (stat.expenses > maxExpense) {
